@@ -1,0 +1,47 @@
+.env
+.env.*
+secrets/
+
+
+#Git 
+
+.git
+.gitignore
+
+
+#OS and Editor files
+
+.DS_Store
+Thumbs.db
+.vscode
+
+#GO
+
+bin/
+dist/
+*.exe
+*.out
+*.test
+.coverage
+
+#MongoDB
+
+mongodb_data/
+data/db
+
+#Redis 
+
+redis-data/
+dump.rdb
+
+#Logs and temp
+*.logs
+logs/
+tmp/
+temp/
+
+
+#Kubernetes Local files
+
+.kube/
+kind-config.local.yaml

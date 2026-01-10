@@ -1,0 +1,16 @@
+# Shell scripts
+*.sh text eol=lf
+
+# Go files
+*.go text eol=lf
+go.mod text eol=lf
+go.sum text eol=lf
+
+# Swagger / docs
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+# Docker & Kubernetes
+Dockerfile text eol=lf
+*.env text eol=lf

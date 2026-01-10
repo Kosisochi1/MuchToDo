@@ -1,0 +1,63 @@
+# -------------------------------
+# Backend Deployment + Service
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: muchtodo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: backend
+          image: docker.io/kosisochi1/go-backend-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+           - name: USERNAME
+             valueFrom: 
+                configMapKeyRef:
+                   name: backend-config
+                   key: USERNAME
+           - name: PASSWORD
+             valueFrom:
+                secretKeyRef:
+                   name: backend-secret
+                   key: mongo-root-password
+           - name: MONGO_URI
+             valueFrom:
+              secretKeyRef:
+                   name: backend-secret
+                   key: MONGO_URI
+
+
+          volumeMounts:
+            - name: app-logs
+              mountPath: /app/logs
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+      volumes:
+        - name: app-logs
+          emptyDir: {} # swap with PVC if persistent logs needed
