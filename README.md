@@ -46,7 +46,7 @@ Ensure the following are installed:
 # 📥 Clone Repository
 
  ```
- git clone https://github.com/Innocent9712/much-to-do.git
+ git clone https://github.com/Kosisochi1/MuchToDo.git
 cd container-assessment
 ```
 
