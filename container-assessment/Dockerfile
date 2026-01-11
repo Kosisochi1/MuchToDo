@@ -25,7 +25,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd/api/main.go
 FROM alpine:3.19
 
 # Enable HTTPS for external calls
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache curl ca-certificates
 # Create non-root user
 RUN addgroup -S appuser && adduser -S appuser -G appuser
 
@@ -35,7 +35,7 @@ WORKDIR /app
 
 # Copy compiled binary from builder stage
 COPY --from=builder /build/server .
-COPY .env .env
+#COPY .env .env
 
 
 # Add venv to PATH

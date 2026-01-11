@@ -76,15 +76,24 @@ services:
    env_file:
     - .env
    environment:
-    MONGO_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/much_todo_db?authSource=admin
+    MONGO_URI: ${MONGO_URI} #mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/much_todo_db?authSource=admin
     REDIS_ADDR: redis:6379
+    MONGO_USERNAME: ${MONGO_USERNAME}
+    MONGO_PASSWORD: ${MONGO_PASSWORD}
+
    depends_on:
     mongodb:
       condition: service_healthy
     redis:
       condition: service_started
+   healthcheck: 
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
    ports:
     - "8080:8080"
+  
 
    networks:
     - backend
